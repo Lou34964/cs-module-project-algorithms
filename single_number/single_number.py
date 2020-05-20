@@ -4,7 +4,11 @@ Returns: an integer
 '''
 def single_number(arr):
     # Your code here
+    arr.sort()
 
+    for i in range(0, len(arr), 2):
+        if arr[i] is not arr[i+1]:
+            return arr[i]
     pass
 
 

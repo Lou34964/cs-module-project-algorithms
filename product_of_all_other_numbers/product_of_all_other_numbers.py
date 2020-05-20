@@ -4,8 +4,29 @@ Returns: a List of integers
 '''
 def product_of_all_other_numbers(arr):
     # Your code here
+    products = []
+    curprod = 1
+    for i in range(len(arr)):
 
-    pass
+        curprod = 1
+        newarr = []
+
+        for a in arr:
+            newarr.append(a)
+
+        
+
+        newarr.pop(i)
+
+        print("newarr:" , newarr)
+
+        for e in newarr:
+            curprod *= e
+
+        products.append(curprod)
+
+    return products
+
 
 
 if __name__ == '__main__':

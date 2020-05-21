@@ -4,82 +4,54 @@ Returns: a List of integers
 '''
 
 def sliding_window_max(nums, k):
-    return sliding_window_max_unoptimized(nums, k)
-    # return sliding_window_max_optimized(nums, k)
+    # Your code here
+    # max_upto array stores the index 
+    # upto which the maximum element is a[i] 
+    # i.e. max(a[i], a[i + 1], ... a[max_upto[i]]) = a[i] 
 
-def sliding_window_max_unoptimized(nums, k):
+    # max = 0
+    # max_nums = []
+    # n = len(nums)
 
-    # hold maxes for each window.
-    total_maxes = len(nums) - k + 1
-    maxes = [None] * total_maxes
+    # for i in range(n - k + 1): 
+    #     max = nums[i] 
+    #     for j in range(1, k): 
+    #         if nums[i + j] > max: 
+    #             max = nums[i + j] 
+    #     max_nums.append(max) 
+    # return max_nums
 
-    # calculate max for each window
-    for i in range(total_maxes):
+    n = len(nums)
+    max_nums = []
+    max_upto=[0 for i in range(n)] 
+  
+    # Update max_upto array similar to 
+    # finding next greater element 
+    s=[] 
+    s.append(0) 
+  
+    for i in range(1,n): 
+        while (len(s) > 0 and nums[s[-1]] < nums[i]): 
+            max_upto[s[-1]] = i - 1
+            del s[-1] 
+          
+        s.append(i) 
+  
+    while (len(s) > 0): 
+        max_upto[s[-1]] = n - 1
+        del s[-1] 
+  
+    j = 0
+    for i in range(n - k + 1): 
+  
+        # j < i is to check whether the 
+        # jth element is outside the window 
+        while (j < i or max_upto[j] < i + k - 1): 
+            j += 1
+        max_nums.append(nums[j]) 
 
-        lower_bound = i
-        upper_bound = i + (k - 1)
+    return max_nums
 
-        maxes[i] = max(nums[lower_bound:upper_bound + 1])
-
-    return maxes
-
-def sliding_window_max_optimized(nums, k):
-
-    # hold maxes for each window
-    maxes = []
-
-    # store the current max value and its index    
-    max_value = nums[0]
-    max_index = 0
-
-    # also store the second largest value and its index
-    # if the max value is shifted off to the left, the new max will be either...
-    # ...the second largest value in the existing window
-    # ...the incoming value
-    second_largest_value = None
-    second_largest_index = None
-
-    # the second largest value always needs to be known so it can potentially be upgraded to the max value
-    # if the second largest value is shifted off to the left or if it is upgraded to max, the new second largest value will be either...
-    # ...the third largest value in the existing window
-    # ...the incoming value
-    third_largest_value = None
-    third_largest_index = None
-
-    # all values would have to be known in this case...
-
-    # find max for each sliding window
-    for i in range(len(nums)):
-
-        print(i)
-
-        # if i < k, then the first sliding window hasn't started yet
-        # take this time to find the max and second largest for the first sliding window (first k numbers)
-        if i < k:
-
-            # check if a larger value is coming in
-            if nums[i] > max_value:
-
-                # new value will be the max; old max will be the second largest
-                second_largest_value = max_value
-                second_largest_index = max_index
-
-                max_value = nums[i]
-                max_index = i
-
-            # check if a larger second-largest is coming in. Update it if it exists
-            elif second_largest_value and (nums[i] > second_largest_value):
-
-                second_largest_value = nums[i]
-                second_largest_index = i
-
-        # each time the window shifts over to the right, determine if the max needs to be updated
-        # also determine if second_largest needs to be updated
-        else:
-            pass
-
-
-    return maxes
 
 if __name__ == '__main__':
     # Use the main function here to test out your implementation 
@@ -87,9 +59,3 @@ if __name__ == '__main__':
     k = 3
 
     print(f"Output of sliding_window_max function is: {sliding_window_max(arr, k)}")
-
-
-arr = [1, 3, -1, -3, 5, 3, 6, 7]
-k = 3
-
-print(sliding_window_max(arr, k))

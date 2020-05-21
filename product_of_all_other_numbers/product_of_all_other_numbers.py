@@ -4,25 +4,30 @@ Returns: a List of integers
 '''
 def product_of_all_other_numbers(arr):
     # Your code here
-    products = []
-    curprod = 1
+
+
+    products = [] #list of products 
+    curprod = 1 # current sequence product 
     for i in range(len(arr)):
 
-        curprod = 1
-        newarr = []
+        curprod = 1 # current sequence product reset
+        newarr = [] # new arr (will be temp copy of original array)
 
+        #loop over each element in arr and copy it to newarr
         for a in arr:
             newarr.append(a)
 
         
-
+        # remove current index from the newarr list
         newarr.pop(i)
 
-        print("newarr:" , newarr)
+        #print("newarr:" , newarr)
 
+        #loop over each element left and calculate the product
         for e in newarr:
             curprod *= e
 
+        #app the current product to products list
         products.append(curprod)
 
     return products

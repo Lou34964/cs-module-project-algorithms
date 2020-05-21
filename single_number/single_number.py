@@ -9,7 +9,7 @@ def single_number(arr):
     for i in range(0, len(arr), 2):
         if arr[i] is not arr[i+1]:
             return arr[i]
-    pass
+    
 
 
 if __name__ == '__main__':

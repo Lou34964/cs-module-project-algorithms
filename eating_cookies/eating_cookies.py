@@ -3,6 +3,7 @@ Input: an integer
 Returns: an integer
 '''
 def eating_cookies(n, cache=None):
+  #if cache is empty return empty object
   if cache is None:
     cache = {}
 
